@@ -2,7 +2,7 @@
   "name": "LAP Coach Racing",
   "short_name": "LAP",
   "description": "Motorsport telemetry analysis — upload, analyze, improve.",
-  "start_url": "/app/dashboard",
+  "start_url": "/dashboard",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
