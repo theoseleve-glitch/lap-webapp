@@ -1,0 +1,66 @@
+/* Brutalist grid overlay — ambient gold glow + structure */
+.texture-grain {
+  position: relative;
+  background-image: var(--bg-radial-1), var(--bg-grid);
+  background-size: auto, 56px 56px;
+  background-attachment: fixed, scroll;
+}
+
+.texture-grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 3px,
+      rgba(240, 237, 229, 0.02) 3px,
+      rgba(240, 237, 229, 0.02) 4px
+    );
+  z-index: 1;
+}
+
+.texture-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  mix-blend-mode: overlay;
+  z-index: 2;
+}
+
+/* Dither overlay for panels — subtle dot grid */
+.texture-dither { position: relative; }
+.texture-dither::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.02;
+  background-image: radial-gradient(circle, var(--chalk) 1px, transparent 1px);
+  background-size: 4px 4px;
+  z-index: 1;
+}
+
+/* Scan lines for photography */
+.texture-scanlines { position: relative; }
+.texture-scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.02;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 1px,
+    var(--chalk) 1px,
+    var(--chalk) 2px
+  );
+  z-index: 1;
+}

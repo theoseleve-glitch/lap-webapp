@@ -1,0 +1,330 @@
+@import '../styles/tokens.css';
+@import '../styles/textures.css';
+@import '../styles/reduced-motion.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base reset */
+html {
+  scroll-behavior: auto;
+  background: var(--asphalt);
+  color: var(--chalk);
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--lh-body);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography classes — reference tokens, never raw values */
+.font-monument {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--ls-display);
+  line-height: var(--lh-display);
+}
+
+.font-telemetry {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  font-size: var(--text-telemetry);
+  line-height: var(--lh-label);
+}
+
+.font-body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: var(--lh-body);
+}
+
+/* Prose max line length */
+.prose-max {
+  max-width: var(--max-prose);
+}
+
+/* Muted text (WCAG AA compliant) */
+.text-muted {
+  color: var(--text-muted);
+}
+
+/* Numeric values: always mono */
+.tabular-nums {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* CTA no-wrap */
+.cta-nowrap {
+  white-space: nowrap;
+  min-width: 8rem;
+}
+
+/* Layout utilities */
+.grid-lap {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
+  gap: var(--grid-gutter);
+  padding-inline: var(--grid-margin);
+}
+
+/* Room container */
+.room {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--asphalt);
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ── Radio card waveform animation ────── */
+@keyframes radio-wave {
+  0%, 100% { height: 3px; }
+  50% { height: 12px; }
+}
+.radio-bar {
+  animation: radio-wave 0.8s ease-in-out infinite;
+}
+
+/* ── Marquee scroll (Basement-inspired) ── */
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── Text shimmer (Vercel-inspired) ────── */
+/* A gold highlight sweeps across text, creating a metallic shimmer.
+   Uses background-clip:text + animated background-position. */
+
+@keyframes text-shimmer {
+  0%   { background-position: 100% 50%; }
+  100% { background-position: -100% 50%; }
+}
+
+.text-shimmer {
+  background: linear-gradient(
+    105deg,
+    var(--chalk) 0%,
+    var(--chalk) 35%,
+    rgba(201, 168, 76, 0.8) 50%,
+    var(--chalk) 65%,
+    var(--chalk) 100%
+  );
+  background-size: 250% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: text-shimmer 6s ease-in-out infinite;
+}
+
+/* ── Beam border (Linear-inspired) ──────── */
+/* Rotating conic-gradient creates a light beam tracing card edges on hover.
+   The ::before is the spinning gradient, ::after is the inner fill that masks
+   everything except the 1px edge — producing the animated border illusion. */
+
+@keyframes beam-spin {
+  to { transform: rotate(360deg); }
+}
+
+.beam-card {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.beam-card::before {
+  content: '';
+  position: absolute;
+  z-index: -2;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  margin-top: -100%;
+  margin-left: -100%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    rgba(201, 168, 76, 0.6) 6%,
+    transparent 14%,
+    transparent 50%,
+    rgba(240, 237, 229, 0.15) 56%,
+    transparent 64%
+  );
+  animation: beam-spin 4s linear infinite;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.beam-card:hover::before {
+  opacity: 1;
+}
+
+.beam-card::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 1px;
+  background: var(--concrete, #141414);
+}
+
+/* ── Microinteractions ─────────────────── */
+
+/* Animated underline on links */
+.room a:not(.no-underline):not([class*="pit-"]):not([class*="stamp-"]) {
+  position: relative;
+  text-decoration: none;
+}
+
+.room a:not(.no-underline):not([class*="pit-"]):not([class*="stamp-"])::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width var(--duration-micro) var(--ease-inertia);
+}
+
+.room a:not(.no-underline):not([class*="pit-"]):not([class*="stamp-"]):hover::after {
+  width: 100%;
+}
+
+/* Button press depth + rebound */
+.room button,
+.room [role="button"] {
+  transition: transform var(--duration-micro) var(--ease-spring);
+}
+
+.room button:hover,
+.room [role="button"]:hover {
+  opacity: 0.85;
+}
+
+.room button:active,
+.room [role="button"]:active {
+  transform: scale(0.97);
+  transition-duration: 60ms;
+}
+
+
+/* CSS containment — isolate repaints from triggering full-page layout */
+[id="speed-chart"],
+[id="gg-chart"],
+[id="gps-trace-chart"],
+[id="speed-zoom-chart"] {
+  contain: layout paint;
+}
+
+[id="speed-zoom-panel"] {
+  contain: layout style;
+}
+
+/* Containment for heavy app-shell regions */
+[role="img"] { contain: layout paint; }
+[data-sidebar] { contain: layout style; }
+main > section { contain: layout; }
+
+/* Reserve chart container dimensions to prevent CLS (#0106) */
+[id="speed-chart"],
+[id="speed-zoom-chart"] {
+  min-height: 250px;
+  aspect-ratio: 16 / 5;
+}
+
+[id="gg-chart"] {
+  min-height: 300px;
+  aspect-ratio: 1 / 1;
+}
+
+[id="gps-trace-chart"] {
+  min-height: 300px;
+  aspect-ratio: 4 / 3;
+}
+
+/* ── Chart fade-in on render ──────────── */
+@keyframes chart-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.chart-enter {
+  animation: chart-fade-in 0.4s ease-out both;
+}
+
+/* ── Share card modal animations ──────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes cardReveal {
+  from { opacity: 0; transform: scale(0.92) translateY(20px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ── Print-friendly styles ─────────────── */
+@media print {
+  /* Reset backgrounds for ink-saving */
+  html, body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 12px;
+  }
+
+  /* Hide nav, sidebar, interactive controls */
+  nav, [data-print="hide"], button:not([data-print="show"]),
+  .beam-card::before, .beam-card::after,
+  [role="tablist"], footer {
+    display: none !important;
+  }
+
+  /* Override dark theme cards */
+  .bg-concrete, .bg-asphalt {
+    background: #fafafa !important;
+    border-color: #ddd !important;
+  }
+
+  .text-chalk, .text-white { color: #000 !important; }
+  .text-steel, .text-muted { color: #555 !important; }
+  .text-acid-green { color: #16a34a !important; }
+  .text-safety-red { color: #dc2626 !important; }
+  .text-pit-orange { color: #a3660a !important; }
+
+  /* Score bars: ensure visible */
+  .bg-asphalt { background: #eee !important; }
+
+  /* Break pages cleanly */
+  .room { min-height: auto; page-break-inside: avoid; }
+  h1, h2, h3 { page-break-after: avoid; }
+
+  /* Charts: ensure they fit page width */
+  [id="speed-chart"], [id="gg-chart"], [id="gps-trace-chart"], [id="speed-zoom-chart"] {
+    contain: none;
+    page-break-inside: avoid;
+  }
+}
