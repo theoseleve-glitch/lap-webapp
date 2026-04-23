@@ -40,3 +40,6 @@ coverage/
 # Cloudflare
 .wrangler/
 .open-next/
+
+# Claude Code session scratch
+.claude/
