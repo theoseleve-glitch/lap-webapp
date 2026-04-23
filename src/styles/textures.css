@@ -2,28 +2,29 @@
 .texture-grain {
   position: relative;
   background-image: var(--bg-radial-1), var(--bg-grid);
-  background-size: auto, 56px 56px;
+  background-size:
+    auto,
+    56px 56px;
   background-attachment: fixed, scroll;
 }
 
 .texture-grain::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      transparent 0,
-      transparent 3px,
-      rgba(240, 237, 229, 0.02) 3px,
-      rgba(240, 237, 229, 0.02) 4px
-    );
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0,
+    transparent 3px,
+    rgba(240, 237, 229, 0.02) 3px,
+    rgba(240, 237, 229, 0.02) 4px
+  );
   z-index: 1;
 }
 
 .texture-grain::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -35,9 +36,11 @@
 }
 
 /* Dither overlay for panels — subtle dot grid */
-.texture-dither { position: relative; }
+.texture-dither {
+  position: relative;
+}
 .texture-dither::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -48,9 +51,11 @@
 }
 
 /* Scan lines for photography */
-.texture-scanlines { position: relative; }
+.texture-scanlines {
+  position: relative;
+}
 .texture-scanlines::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;

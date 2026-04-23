@@ -10,6 +10,7 @@ This repo's 30-day sprint queue is at:
 ## Architecture
 
 See `C:/Users/Admin/Documents/Telemetry/docs/roadmap/02-ARCHITECTURE-DECISIONS.md`. Key ADRs:
+
 - **ADR-002** — Extracted from `lap-website` monolith
 - **ADR-004** — Consumes generated TS types from `@lap/schemas`
 - **ADR-011** — Clerk for auth

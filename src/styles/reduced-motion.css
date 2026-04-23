@@ -1,5 +1,7 @@
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     /* Transitions kept at 200ms (not killed) to preserve spatial context
@@ -10,7 +12,9 @@
 }
 
 /* User-toggled reduced motion (class on html) */
-.reduce-motion *, .reduce-motion *::before, .reduce-motion *::after {
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
   animation-duration: 0.01ms !important;
   animation-iteration-count: 1 !important;
   /* Transitions kept at 200ms (not killed) to preserve spatial context

@@ -4,7 +4,7 @@
  * to the production API origin when NEXT_PUBLIC_API_URL is unset.
  */
 
-const apiOrigin = process.env.NEXT_PUBLIC_API_URL ?? "https://api.lap.com";
+const apiOrigin = process.env.NEXT_PUBLIC_API_URL ?? "https://api.lap-coach.racing";
 
 const csp = [
   "default-src 'self'",

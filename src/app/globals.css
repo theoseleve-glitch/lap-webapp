@@ -1,6 +1,6 @@
-@import '../styles/tokens.css';
-@import '../styles/textures.css';
-@import '../styles/reduced-motion.css';
+@import "../styles/tokens.css";
+@import "../styles/textures.css";
+@import "../styles/reduced-motion.css";
 
 @tailwind base;
 @tailwind components;
@@ -103,8 +103,13 @@ body {
 
 /* ── Radio card waveform animation ────── */
 @keyframes radio-wave {
-  0%, 100% { height: 3px; }
-  50% { height: 12px; }
+  0%,
+  100% {
+    height: 3px;
+  }
+  50% {
+    height: 12px;
+  }
 }
 .radio-bar {
   animation: radio-wave 0.8s ease-in-out infinite;
@@ -113,8 +118,12 @@ body {
 /* ── Marquee scroll (Basement-inspired) ── */
 
 @keyframes marquee-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 /* ── Text shimmer (Vercel-inspired) ────── */
@@ -122,8 +131,12 @@ body {
    Uses background-clip:text + animated background-position. */
 
 @keyframes text-shimmer {
-  0%   { background-position: 100% 50%; }
-  100% { background-position: -100% 50%; }
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: -100% 50%;
+  }
 }
 
 .text-shimmer {
@@ -148,7 +161,9 @@ body {
    everything except the 1px edge — producing the animated border illusion. */
 
 @keyframes beam-spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .beam-card {
@@ -158,7 +173,7 @@ body {
 }
 
 .beam-card::before {
-  content: '';
+  content: "";
   position: absolute;
   z-index: -2;
   top: 50%;
@@ -186,7 +201,7 @@ body {
 }
 
 .beam-card::after {
-  content: '';
+  content: "";
   position: absolute;
   z-index: -1;
   inset: 1px;
@@ -202,7 +217,7 @@ body {
 }
 
 .room a:not(.no-underline):not([class*="pit-"]):not([class*="stamp-"])::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -2px;
   left: 0;
@@ -233,7 +248,6 @@ body {
   transition-duration: 60ms;
 }
 
-
 /* CSS containment — isolate repaints from triggering full-page layout */
 [id="speed-chart"],
 [id="gg-chart"],
@@ -247,9 +261,15 @@ body {
 }
 
 /* Containment for heavy app-shell regions */
-[role="img"] { contain: layout paint; }
-[data-sidebar] { contain: layout style; }
-main > section { contain: layout; }
+[role="img"] {
+  contain: layout paint;
+}
+[data-sidebar] {
+  contain: layout style;
+}
+main > section {
+  contain: layout;
+}
 
 /* Reserve chart container dimensions to prevent CLS (#0106) */
 [id="speed-chart"],
@@ -270,8 +290,14 @@ main > section { contain: layout; }
 
 /* ── Chart fade-in on render ──────────── */
 @keyframes chart-fade-in {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .chart-enter {
   animation: chart-fade-in 0.4s ease-out both;
@@ -279,51 +305,91 @@ main > section { contain: layout; }
 
 /* ── Share card modal animations ──────── */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 @keyframes cardReveal {
-  from { opacity: 0; transform: scale(0.92) translateY(20px); }
-  to   { opacity: 1; transform: scale(1) translateY(0); }
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 /* ── Print-friendly styles ─────────────── */
 @media print {
   /* Reset backgrounds for ink-saving */
-  html, body {
+  html,
+  body {
     background: #fff !important;
     color: #000 !important;
     font-size: 12px;
   }
 
   /* Hide nav, sidebar, interactive controls */
-  nav, [data-print="hide"], button:not([data-print="show"]),
-  .beam-card::before, .beam-card::after,
-  [role="tablist"], footer {
+  nav,
+  [data-print="hide"],
+  button:not([data-print="show"]),
+  .beam-card::before,
+  .beam-card::after,
+  [role="tablist"],
+  footer {
     display: none !important;
   }
 
   /* Override dark theme cards */
-  .bg-concrete, .bg-asphalt {
+  .bg-concrete,
+  .bg-asphalt {
     background: #fafafa !important;
     border-color: #ddd !important;
   }
 
-  .text-chalk, .text-white { color: #000 !important; }
-  .text-steel, .text-muted { color: #555 !important; }
-  .text-acid-green { color: #16a34a !important; }
-  .text-safety-red { color: #dc2626 !important; }
-  .text-pit-orange { color: #a3660a !important; }
+  .text-chalk,
+  .text-white {
+    color: #000 !important;
+  }
+  .text-steel,
+  .text-muted {
+    color: #555 !important;
+  }
+  .text-acid-green {
+    color: #16a34a !important;
+  }
+  .text-safety-red {
+    color: #dc2626 !important;
+  }
+  .text-pit-orange {
+    color: #a3660a !important;
+  }
 
   /* Score bars: ensure visible */
-  .bg-asphalt { background: #eee !important; }
+  .bg-asphalt {
+    background: #eee !important;
+  }
 
   /* Break pages cleanly */
-  .room { min-height: auto; page-break-inside: avoid; }
-  h1, h2, h3 { page-break-after: avoid; }
+  .room {
+    min-height: auto;
+    page-break-inside: avoid;
+  }
+  h1,
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
 
   /* Charts: ensure they fit page width */
-  [id="speed-chart"], [id="gg-chart"], [id="gps-trace-chart"], [id="speed-zoom-chart"] {
+  [id="speed-chart"],
+  [id="gg-chart"],
+  [id="gps-trace-chart"],
+  [id="speed-zoom-chart"] {
     contain: none;
     page-break-inside: avoid;
   }
