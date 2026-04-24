@@ -30,8 +30,19 @@ function pointAt(angleRad: number, radius: number): { x: number; y: number } {
   };
 }
 
+function summarizeDimensions(dimensions: readonly SkillDimension[]): string {
+  let strongest = dimensions[0]!;
+  let weakest = dimensions[0]!;
+  for (const dim of dimensions) {
+    if (dim.value > strongest.value) strongest = dim;
+    if (dim.value < weakest.value) weakest = dim;
+  }
+  return `${dimensions.length} skill dimensions. Strongest: ${strongest.label} at ${Math.round(strongest.value)}. Weakest: ${weakest.label} at ${Math.round(weakest.value)}.`;
+}
+
 export function SkillRadarChart({ dimensions, title = "Skill radar" }: SkillRadarChartProps) {
   const titleId = useId();
+  const descId = useId();
 
   if (dimensions.length === 0) {
     return (
@@ -63,14 +74,18 @@ export function SkillRadarChart({ dimensions, title = "Skill radar" }: SkillRada
     return { label: dim.label, href: dim.href, x, y };
   });
 
+  const description = summarizeDimensions(dimensions);
+
   return (
     <svg
       role="img"
       aria-labelledby={titleId}
+      aria-describedby={descId}
       viewBox={`0 0 ${SIZE} ${SIZE}`}
       className="w-full max-w-sm text-steel"
     >
       <title id={titleId}>{title}</title>
+      <desc id={descId}>{description}</desc>
 
       {RINGS.map((ratio) => (
         <circle

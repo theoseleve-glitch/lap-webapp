@@ -70,4 +70,17 @@ describe("DriverScoreCard", () => {
     render(<DriverScoreCard score={78} trend={[]} />);
     expect(screen.getByRole("region", { name: /driver score.*78/i })).toBeInTheDocument();
   });
+
+  it("exposes an accessible description summarising the trend range and length", () => {
+    render(<DriverScoreCard score={78} trend={[62, 65, 68, 70, 72, 75, 78]} />);
+    const region = screen.getByRole("region", { name: /driver score/i });
+    expect(region).toHaveAccessibleDescription(/7.*periods/i);
+    expect(region).toHaveAccessibleDescription(/62.*78/);
+  });
+
+  it("describes the score plainly when trend is empty", () => {
+    render(<DriverScoreCard score={45} trend={[]} />);
+    const region = screen.getByRole("region", { name: /driver score/i });
+    expect(region).toHaveAccessibleDescription(/no trend/i);
+  });
 });

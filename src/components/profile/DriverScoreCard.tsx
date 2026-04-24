@@ -42,6 +42,13 @@ const DELTA_TONE: Record<DeltaSign, string> = {
   neutral: "text-steel",
 };
 
+function summarizeTrend(trend: readonly number[]): string {
+  if (trend.length < 2) return "No trend data.";
+  const first = trend[0]!;
+  const last = trend[trend.length - 1]!;
+  return `Trend over ${trend.length} periods: from ${first} to ${last}.`;
+}
+
 export function DriverScoreCard({
   score,
   trend,
@@ -50,13 +57,16 @@ export function DriverScoreCard({
 }: DriverScoreCardProps) {
   const labelId = useId();
   const scoreId = useId();
+  const descId = useId();
   const sign = delta === undefined ? undefined : signOf(delta);
   const showSparkline = trend.length >= 2;
+  const description = summarizeTrend(trend);
 
   return (
     <section
       role="region"
       aria-labelledby={`${labelId} ${scoreId}`}
+      aria-describedby={descId}
       className="flex flex-col gap-3 rounded border border-steel/30 bg-concrete p-5"
     >
       <p id={labelId} className="font-telemetry text-steel text-[11px] uppercase tracking-[0.12em]">
@@ -95,6 +105,9 @@ export function DriverScoreCard({
           />
         </svg>
       )}
+      <p id={descId} className="sr-only">
+        {description}
+      </p>
     </section>
   );
 }

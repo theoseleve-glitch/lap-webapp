@@ -42,8 +42,12 @@ export function ReadinessGauge({
 }: ReadinessGaugeProps) {
   const labelId = useId();
   const scoreId = useId();
+  const descId = useId();
   const clamped = clampPercent(value);
   const rounded = Math.round(clamped);
+  const description = eventLabel
+    ? `${rounded} percent ready for ${eventLabel}.`
+    : `${rounded} percent ready.`;
 
   const content = (
     <>
@@ -77,6 +81,9 @@ export function ReadinessGauge({
         {rounded}
       </p>
       {eventLabel && <p className="font-body text-muted text-xs">{eventLabel}</p>}
+      <p id={descId} className="sr-only">
+        {description}
+      </p>
     </>
   );
 
@@ -88,6 +95,7 @@ export function ReadinessGauge({
       <a
         href={targetHref}
         aria-labelledby={`${labelId} ${scoreId}`}
+        aria-describedby={descId}
         className={`${wrapperClass} no-underline hover:border-steel/50`}
       >
         {content}
@@ -96,7 +104,12 @@ export function ReadinessGauge({
   }
 
   return (
-    <section role="region" aria-labelledby={`${labelId} ${scoreId}`} className={wrapperClass}>
+    <section
+      role="region"
+      aria-labelledby={`${labelId} ${scoreId}`}
+      aria-describedby={descId}
+      className={wrapperClass}
+    >
       {content}
     </section>
   );

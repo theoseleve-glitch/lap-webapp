@@ -15,7 +15,7 @@ describe("ReadinessGauge", () => {
 
   it("renders the event label when provided", () => {
     render(<ReadinessGauge value={75} eventLabel="Imola, Mar 15" />);
-    expect(screen.getByText(/imola, mar 15/i)).toBeInTheDocument();
+    expect(screen.getByText(/imola, mar 15/i, { ignore: ".sr-only" })).toBeInTheDocument();
   });
 
   it("omits the event label element when not provided", () => {
@@ -58,5 +58,17 @@ describe("ReadinessGauge", () => {
   it("exposes an accessible region naming both label and score", () => {
     render(<ReadinessGauge value={75} />);
     expect(screen.getByRole("region", { name: /readiness.*75/i })).toBeInTheDocument();
+  });
+
+  it("exposes an accessible description that names the event when provided", () => {
+    render(<ReadinessGauge value={68} eventLabel="Imola, Mar 15" />);
+    const region = screen.getByRole("region", { name: /readiness/i });
+    expect(region).toHaveAccessibleDescription(/imola, mar 15/i);
+  });
+
+  it("exposes an accessible description stating percent-ready when no event is set", () => {
+    render(<ReadinessGauge value={42} />);
+    const region = screen.getByRole("region", { name: /readiness/i });
+    expect(region).toHaveAccessibleDescription(/42.*percent/i);
   });
 });

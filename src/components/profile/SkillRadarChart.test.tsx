@@ -119,4 +119,11 @@ describe("SkillRadarChart", () => {
     );
     expect(screen.queryByRole("link")).toBeNull();
   });
+
+  it("exposes an accessible description that names the strongest and weakest dimensions", () => {
+    render(<SkillRadarChart dimensions={TEN_DIMENSIONS} />);
+    const chart = screen.getByRole("img");
+    expect(chart).toHaveAccessibleDescription(/consistency.*88/i);
+    expect(chart).toHaveAccessibleDescription(/race craft.*54/i);
+  });
 });

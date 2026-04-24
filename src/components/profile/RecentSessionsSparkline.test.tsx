@@ -10,12 +10,12 @@ const LAP_TIMES = [
 describe("RecentSessionsSparkline", () => {
   it("renders the default 'Recent sessions' label", () => {
     render(<RecentSessionsSparkline lapTimes={LAP_TIMES} />);
-    expect(screen.getByText(/recent sessions/i)).toBeInTheDocument();
+    expect(screen.getByText(/recent sessions/i, { ignore: ".sr-only" })).toBeInTheDocument();
   });
 
   it("renders a custom label when provided", () => {
     render(<RecentSessionsSparkline lapTimes={LAP_TIMES} label="Qualifying best" />);
-    expect(screen.getByText(/qualifying best/i)).toBeInTheDocument();
+    expect(screen.getByText(/qualifying best/i, { ignore: ".sr-only" })).toBeInTheDocument();
   });
 
   it("renders a polyline with one point per shown lap time", () => {
@@ -53,7 +53,7 @@ describe("RecentSessionsSparkline", () => {
 
   it("renders an empty-state message when no lap times are supplied", () => {
     render(<RecentSessionsSparkline lapTimes={[]} />);
-    expect(screen.getByText(/no recent sessions/i)).toBeInTheDocument();
+    expect(screen.getByText(/no recent sessions/i, { ignore: ".sr-only" })).toBeInTheDocument();
   });
 
   it("does not render a polyline in the empty state", () => {
@@ -69,5 +69,19 @@ describe("RecentSessionsSparkline", () => {
   it("exposes an accessible region named by the label", () => {
     render(<RecentSessionsSparkline lapTimes={LAP_TIMES} />);
     expect(screen.getByRole("region", { name: /recent sessions/i })).toBeInTheDocument();
+  });
+
+  it("exposes an accessible description with session count and lap-time range", () => {
+    render(<RecentSessionsSparkline lapTimes={[92.4, 91.1, 90.9, 90.3, 89.1]} />);
+    const region = screen.getByRole("region", { name: /recent sessions/i });
+    expect(region).toHaveAccessibleDescription(/5.*sessions/i);
+    expect(region).toHaveAccessibleDescription(/89\.1/);
+    expect(region).toHaveAccessibleDescription(/92\.4/);
+  });
+
+  it("describes the empty state when no lap times are supplied", () => {
+    render(<RecentSessionsSparkline lapTimes={[]} />);
+    const region = screen.getByRole("region", { name: /recent sessions/i });
+    expect(region).toHaveAccessibleDescription(/no.*sessions/i);
   });
 });
