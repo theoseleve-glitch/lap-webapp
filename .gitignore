@@ -25,6 +25,9 @@ coverage/
 /playwright/.cache/
 /test-results/
 
+# Storybook
+/storybook-static/
+
 # Env
 .env
 .env.local
