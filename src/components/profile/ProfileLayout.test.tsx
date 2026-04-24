@@ -89,4 +89,23 @@ describe("ProfileLayout", () => {
     expect(cls).toContain("md:grid-cols-3");
     expect(/(^|\s)grid-cols-\d/.test(cls)).toBe(false);
   });
+
+  it("applies a print-friendly white background + black text to the root", () => {
+    const { container } = render(<ProfileLayout {...baseProps} />);
+    const root = container.querySelector('[data-layout="profile"]');
+    expect(root?.className).toMatch(/print:bg-white/);
+    expect(root?.className).toMatch(/print:text-black/);
+  });
+
+  it("keeps the hero section on one printed page", () => {
+    const { container } = render(<ProfileLayout {...baseProps} />);
+    const hero = container.querySelector('[data-layout="profile-hero"]');
+    expect(hero?.className).toMatch(/print:break-inside-avoid/);
+  });
+
+  it("keeps the three-column row on one printed page", () => {
+    const { container } = render(<ProfileLayout {...baseProps} />);
+    const columns = container.querySelector('[data-layout="profile-columns"]');
+    expect(columns?.className).toMatch(/print:break-inside-avoid/);
+  });
 });

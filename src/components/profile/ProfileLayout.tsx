@@ -25,10 +25,10 @@ export function ProfileLayout({
   archetypeCohortSize,
 }: ProfileLayoutProps) {
   return (
-    <div data-layout="profile" className="flex flex-col gap-6">
+    <div data-layout="profile" className="flex flex-col gap-6 print:bg-white print:text-black">
       <header
         data-layout="profile-hero"
-        className="grid gap-4 md:grid-cols-[2fr_1fr] md:items-start"
+        className="grid gap-4 md:grid-cols-[2fr_1fr] md:items-start print:break-inside-avoid"
       >
         <DriverScoreCard {...score} />
         {archetype !== undefined && (
@@ -40,7 +40,10 @@ export function ProfileLayout({
 
       <SkillRadarChart dimensions={skillDimensions} />
 
-      <div data-layout="profile-columns" className="grid gap-4 md:grid-cols-3">
+      <div
+        data-layout="profile-columns"
+        className="grid gap-4 md:grid-cols-3 print:grid-cols-3 print:break-inside-avoid"
+      >
         <OpenWeaknessesList weaknesses={weaknesses} />
         <ActivePrescriptionsList prescriptions={prescriptions} />
         <ReadinessGauge {...readiness} />
