@@ -25,3 +25,7 @@ export function prescriptionDetailPath(prescriptionId: string): string {
   }
   return `/prescriptions/${encodeURIComponent(prescriptionId)}`;
 }
+
+export function targetEventPickerPath(): string {
+  return "/profile/readiness";
+}

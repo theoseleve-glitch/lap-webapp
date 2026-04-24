@@ -3,6 +3,7 @@ import {
   prescriptionDetailPath,
   sessionDetailPath,
   skillDrilldownPath,
+  targetEventPickerPath,
   weaknessDetailPath,
 } from "./routes";
 
@@ -93,5 +94,15 @@ describe("prescriptionDetailPath", () => {
 
   it("throws when the id is whitespace only", () => {
     expect(() => prescriptionDetailPath("   ")).toThrow(/required/i);
+  });
+});
+
+describe("targetEventPickerPath", () => {
+  it("returns the canonical /profile/readiness picker path", () => {
+    expect(targetEventPickerPath()).toBe("/profile/readiness");
+  });
+
+  it("always begins with a leading slash (absolute path)", () => {
+    expect(targetEventPickerPath().startsWith("/")).toBe(true);
   });
 });
