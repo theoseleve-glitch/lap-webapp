@@ -3,6 +3,7 @@ import { useId } from "react";
 export interface SkillDimension {
   label: string;
   value: number;
+  href?: string;
 }
 
 export interface SkillRadarChartProps {
@@ -59,7 +60,7 @@ export function SkillRadarChart({ dimensions, title = "Skill radar" }: SkillRada
 
   const labelPositions = dimensions.map((dim, index) => {
     const { x, y } = pointAt(axes[index] ?? 0, RADIUS + 16);
-    return { label: dim.label, x, y };
+    return { label: dim.label, href: dim.href, x, y };
   });
 
   return (
@@ -109,18 +110,27 @@ export function SkillRadarChart({ dimensions, title = "Skill radar" }: SkillRada
         strokeWidth={1.5}
       />
 
-      {labelPositions.map(({ label, x, y }) => (
-        <text
-          key={label}
-          x={x}
-          y={y}
-          textAnchor="middle"
-          dominantBaseline="middle"
-          className="font-telemetry text-[9px] uppercase tracking-[0.12em] fill-chalk"
-        >
-          {label}
-        </text>
-      ))}
+      {labelPositions.map(({ label, href, x, y }) => {
+        const text = (
+          <text
+            x={x}
+            y={y}
+            textAnchor="middle"
+            dominantBaseline="middle"
+            className="font-telemetry text-[9px] uppercase tracking-[0.12em] fill-chalk"
+          >
+            {label}
+          </text>
+        );
+        if (href) {
+          return (
+            <a key={label} href={href} aria-label={label}>
+              {text}
+            </a>
+          );
+        }
+        return <g key={label}>{text}</g>;
+      })}
     </svg>
   );
 }

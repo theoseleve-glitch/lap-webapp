@@ -92,4 +92,31 @@ describe("SkillRadarChart", () => {
     render(<SkillRadarChart dimensions={[]} />);
     expect(screen.getByText(/no skill data/i)).toBeInTheDocument();
   });
+
+  it("renders dimension labels as links when an href is supplied", () => {
+    render(
+      <SkillRadarChart
+        dimensions={[
+          { label: "Braking", value: 72, href: "/profile/skills/braking" },
+          { label: "Apex", value: 80 },
+        ]}
+      />,
+    );
+    expect(screen.getByRole("link", { name: /braking/i })).toHaveAttribute(
+      "href",
+      "/profile/skills/braking",
+    );
+  });
+
+  it("keeps dimension labels as plain text when no href is supplied", () => {
+    render(
+      <SkillRadarChart
+        dimensions={[
+          { label: "Braking", value: 72 },
+          { label: "Apex", value: 80 },
+        ]}
+      />,
+    );
+    expect(screen.queryByRole("link")).toBeNull();
+  });
 });

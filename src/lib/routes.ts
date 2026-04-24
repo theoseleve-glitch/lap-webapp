@@ -4,3 +4,10 @@ export function sessionDetailPath(sessionId: string): string {
   }
   return `/sessions/${encodeURIComponent(sessionId)}`;
 }
+
+export function skillDrilldownPath(slug: string): string {
+  if (slug.trim() === "") {
+    throw new Error("skillDrilldownPath: slug is required");
+  }
+  return `/profile/skills/${encodeURIComponent(slug)}`;
+}

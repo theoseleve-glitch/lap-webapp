@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { sessionDetailPath } from "./routes";
+import { sessionDetailPath, skillDrilldownPath } from "./routes";
 
 describe("sessionDetailPath", () => {
   it("returns /sessions/{id} for a simple id", () => {
@@ -20,5 +20,27 @@ describe("sessionDetailPath", () => {
 
   it("throws when the id is whitespace only", () => {
     expect(() => sessionDetailPath("   ")).toThrow(/required/i);
+  });
+});
+
+describe("skillDrilldownPath", () => {
+  it("returns /profile/skills/{slug} for a simple slug", () => {
+    expect(skillDrilldownPath("braking")).toBe("/profile/skills/braking");
+  });
+
+  it("URI-encodes unsafe characters in the slug", () => {
+    expect(skillDrilldownPath("trail braking")).toBe("/profile/skills/trail%20braking");
+  });
+
+  it("preserves hyphens in the slug verbatim", () => {
+    expect(skillDrilldownPath("trail-braking")).toBe("/profile/skills/trail-braking");
+  });
+
+  it("throws when the slug is an empty string", () => {
+    expect(() => skillDrilldownPath("")).toThrow(/required/i);
+  });
+
+  it("throws when the slug is whitespace only", () => {
+    expect(() => skillDrilldownPath("   ")).toThrow(/required/i);
   });
 });
