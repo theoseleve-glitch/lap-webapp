@@ -60,4 +60,33 @@ describe("ProfileLayout", () => {
     render(<ProfileLayout {...baseProps} archetype={null} />);
     expect(screen.getByRole("status")).toHaveAccessibleName(/archetype locked/i);
   });
+
+  it("stacks sections vertically by default on mobile", () => {
+    const { container } = render(<ProfileLayout {...baseProps} />);
+    const root = container.querySelector('[data-layout="profile"]');
+    expect(root).not.toBeNull();
+    expect(root?.classList.contains("flex")).toBe(true);
+    expect(root?.classList.contains("flex-col")).toBe(true);
+  });
+
+  it("collapses the hero to a single column below md and to 2 columns from md up", () => {
+    const { container } = render(<ProfileLayout {...baseProps} archetype="Smooth Operator" />);
+    const hero = container.querySelector('[data-layout="profile-hero"]');
+    expect(hero).not.toBeNull();
+    const cls = hero?.className ?? "";
+    expect(cls).toContain("grid");
+    expect(cls).toContain("md:grid-cols-[2fr_1fr]");
+    // The base (mobile) grid must NOT force multiple columns.
+    expect(/(^|\s)grid-cols-\d/.test(cls)).toBe(false);
+  });
+
+  it("collapses the three-column row to a single column below md and to 3 columns from md up", () => {
+    const { container } = render(<ProfileLayout {...baseProps} />);
+    const columns = container.querySelector('[data-layout="profile-columns"]');
+    expect(columns).not.toBeNull();
+    const cls = columns?.className ?? "";
+    expect(cls).toContain("grid");
+    expect(cls).toContain("md:grid-cols-3");
+    expect(/(^|\s)grid-cols-\d/.test(cls)).toBe(false);
+  });
 });
