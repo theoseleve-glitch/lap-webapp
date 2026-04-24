@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { memo, useId } from "react";
 
 export interface DriverScoreCardProps {
   score: number;
@@ -49,7 +49,7 @@ function summarizeTrend(trend: readonly number[]): string {
   return `Trend over ${trend.length} periods: from ${first} to ${last}.`;
 }
 
-export function DriverScoreCard({
+function DriverScoreCardImpl({
   score,
   trend,
   delta,
@@ -111,3 +111,5 @@ export function DriverScoreCard({
     </section>
   );
 }
+
+export const DriverScoreCard = memo(DriverScoreCardImpl);

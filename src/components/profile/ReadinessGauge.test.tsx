@@ -71,4 +71,9 @@ describe("ReadinessGauge", () => {
     const region = screen.getByRole("region", { name: /readiness/i });
     expect(region).toHaveAccessibleDescription(/42.*percent/i);
   });
+
+  it("is wrapped in React.memo so unrelated parent re-renders skip the gauge", () => {
+    const typeOf = (ReadinessGauge as unknown as { $$typeof?: symbol }).$$typeof;
+    expect(typeOf).toBe(Symbol.for("react.memo"));
+  });
 });

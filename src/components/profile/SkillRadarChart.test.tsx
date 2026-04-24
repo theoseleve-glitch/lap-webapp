@@ -126,4 +126,9 @@ describe("SkillRadarChart", () => {
     expect(chart).toHaveAccessibleDescription(/consistency.*88/i);
     expect(chart).toHaveAccessibleDescription(/race craft.*54/i);
   });
+
+  it("is wrapped in React.memo so unrelated parent re-renders skip the chart", () => {
+    const typeOf = (SkillRadarChart as unknown as { $$typeof?: symbol }).$$typeof;
+    expect(typeOf).toBe(Symbol.for("react.memo"));
+  });
 });

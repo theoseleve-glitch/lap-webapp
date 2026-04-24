@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { memo, useId } from "react";
 
 export interface RecentSessionsSparklineProps {
   lapTimes: readonly number[];
@@ -34,7 +34,7 @@ function summarizeSeries(series: readonly number[]): string {
   return `${series.length} recent sessions. Best lap ${best}, slowest lap ${worst}.`;
 }
 
-export function RecentSessionsSparkline({
+function RecentSessionsSparklineImpl({
   lapTimes,
   max = 20,
   label = "Recent sessions",
@@ -82,3 +82,5 @@ export function RecentSessionsSparkline({
     </section>
   );
 }
+
+export const RecentSessionsSparkline = memo(RecentSessionsSparklineImpl);

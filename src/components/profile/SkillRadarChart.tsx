@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { memo, useId } from "react";
 
 export interface SkillDimension {
   label: string;
@@ -40,7 +40,7 @@ function summarizeDimensions(dimensions: readonly SkillDimension[]): string {
   return `${dimensions.length} skill dimensions. Strongest: ${strongest.label} at ${Math.round(strongest.value)}. Weakest: ${weakest.label} at ${Math.round(weakest.value)}.`;
 }
 
-export function SkillRadarChart({ dimensions, title = "Skill radar" }: SkillRadarChartProps) {
+function SkillRadarChartImpl({ dimensions, title = "Skill radar" }: SkillRadarChartProps) {
   const titleId = useId();
   const descId = useId();
 
@@ -149,3 +149,5 @@ export function SkillRadarChart({ dimensions, title = "Skill radar" }: SkillRada
     </svg>
   );
 }
+
+export const SkillRadarChart = memo(SkillRadarChartImpl);

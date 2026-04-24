@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { memo, useId } from "react";
 
 export interface ReadinessGaugeProps {
   value: number;
@@ -34,7 +34,7 @@ function arcPath(percent: number): string {
 
 const BACKGROUND_ARC = arcPath(100);
 
-export function ReadinessGauge({
+function ReadinessGaugeImpl({
   value,
   eventLabel,
   label = "Readiness",
@@ -114,3 +114,5 @@ export function ReadinessGauge({
     </section>
   );
 }
+
+export const ReadinessGauge = memo(ReadinessGaugeImpl);
