@@ -18,3 +18,10 @@ export function weaknessDetailPath(weaknessId: string): string {
   }
   return `/weaknesses/${encodeURIComponent(weaknessId)}`;
 }
+
+export function prescriptionDetailPath(prescriptionId: string): string {
+  if (prescriptionId.trim() === "") {
+    throw new Error("prescriptionDetailPath: prescriptionId is required");
+  }
+  return `/prescriptions/${encodeURIComponent(prescriptionId)}`;
+}

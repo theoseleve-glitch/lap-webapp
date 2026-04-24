@@ -1,5 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { sessionDetailPath, skillDrilldownPath, weaknessDetailPath } from "./routes";
+import {
+  prescriptionDetailPath,
+  sessionDetailPath,
+  skillDrilldownPath,
+  weaknessDetailPath,
+} from "./routes";
 
 describe("sessionDetailPath", () => {
   it("returns /sessions/{id} for a simple id", () => {
@@ -64,5 +69,29 @@ describe("weaknessDetailPath", () => {
 
   it("throws when the id is whitespace only", () => {
     expect(() => weaknessDetailPath("   ")).toThrow(/required/i);
+  });
+});
+
+describe("prescriptionDetailPath", () => {
+  it("returns /prescriptions/{id} for a simple id", () => {
+    expect(prescriptionDetailPath("p1")).toBe("/prescriptions/p1");
+  });
+
+  it("URI-encodes unsafe characters in the id", () => {
+    expect(prescriptionDetailPath("a b/c")).toBe("/prescriptions/a%20b%2Fc");
+  });
+
+  it("preserves hyphens in the id verbatim", () => {
+    expect(prescriptionDetailPath("trail-brake-release")).toBe(
+      "/prescriptions/trail-brake-release",
+    );
+  });
+
+  it("throws when the id is an empty string", () => {
+    expect(() => prescriptionDetailPath("")).toThrow(/required/i);
+  });
+
+  it("throws when the id is whitespace only", () => {
+    expect(() => prescriptionDetailPath("   ")).toThrow(/required/i);
   });
 });
