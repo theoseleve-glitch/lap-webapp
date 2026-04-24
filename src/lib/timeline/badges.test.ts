@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { newWeaknessesBadge, prescriptionsAcceptedBadge } from "./badges";
+import { newWeaknessesBadge, outcomeAchievedBadge, prescriptionsAcceptedBadge } from "./badges";
 
 describe("newWeaknessesBadge", () => {
   it("returns null when the count is zero", () => {
@@ -70,5 +70,22 @@ describe("prescriptionsAcceptedBadge", () => {
 
   it("returns null for NaN", () => {
     expect(prescriptionsAcceptedBadge(Number.NaN)).toBeNull();
+  });
+});
+
+describe("outcomeAchievedBadge", () => {
+  it("returns null when the outcome was not achieved", () => {
+    expect(outcomeAchievedBadge(false)).toBeNull();
+  });
+
+  it("returns the 'Outcome achieved' badge when achieved is true", () => {
+    expect(outcomeAchievedBadge(true)).toEqual({
+      label: "Outcome achieved",
+      tone: "success",
+    });
+  });
+
+  it("uses success tone so the badge reads as a positive signal (green)", () => {
+    expect(outcomeAchievedBadge(true)?.tone).toBe("success");
   });
 });

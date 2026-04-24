@@ -21,3 +21,13 @@ export function prescriptionsAcceptedBadge(count: number): TimelineBadge | null 
     tone: "info",
   };
 }
+
+export function outcomeAchievedBadge(achieved: boolean): TimelineBadge | null {
+  if (!achieved) {
+    return null;
+  }
+  return {
+    label: "Outcome achieved",
+    tone: "success",
+  };
+}
