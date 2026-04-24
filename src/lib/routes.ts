@@ -11,3 +11,10 @@ export function skillDrilldownPath(slug: string): string {
   }
   return `/profile/skills/${encodeURIComponent(slug)}`;
 }
+
+export function weaknessDetailPath(weaknessId: string): string {
+  if (weaknessId.trim() === "") {
+    throw new Error("weaknessDetailPath: weaknessId is required");
+  }
+  return `/weaknesses/${encodeURIComponent(weaknessId)}`;
+}
