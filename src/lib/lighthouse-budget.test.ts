@@ -38,4 +38,11 @@ describe("lighthouserc.json", () => {
   it("uses LHCI's startServerCommand so the server boots automatically", () => {
     expect(lhciConfig.ci.collect.startServerCommand).toBeTruthy();
   });
+
+  it("declares an error-level script-bytes budget at 200KB gzip (204800 bytes)", () => {
+    expect(lhciConfig.ci.assert.assertions["resource-summary:script:size"]).toEqual([
+      "error",
+      { maxNumericValue: 204800 },
+    ]);
+  });
 });
