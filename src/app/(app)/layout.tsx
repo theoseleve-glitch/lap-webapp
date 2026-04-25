@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { PageErrorBoundary } from "@/components/PageErrorBoundary";
 import { ObservabilityProvider } from "@/components/providers/ObservabilityProvider";
 import { QueryProvider } from "@/components/providers/QueryProvider";
 import { AppShell } from "./AppShell";
@@ -17,7 +18,9 @@ export default function AppLayout({ children }: AppLayoutProps) {
   return (
     <ObservabilityProvider>
       <QueryProvider>
-        <AppShell>{children}</AppShell>
+        <PageErrorBoundary>
+          <AppShell>{children}</AppShell>
+        </PageErrorBoundary>
       </QueryProvider>
     </ObservabilityProvider>
   );
