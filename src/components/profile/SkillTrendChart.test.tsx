@@ -88,4 +88,52 @@ describe("SkillTrendChart", () => {
     const typeOf = (SkillTrendChart as unknown as { $$typeof?: symbol }).$$typeof;
     expect(typeOf).toBe(Symbol.for("react.memo"));
   });
+
+  it("wraps points with a sessionId in a link to the session detail page", () => {
+    render(
+      <SkillTrendChart
+        points={[
+          { date: "2026-03-01", score: 60, sessionId: "sess-abc" },
+          { date: "2026-03-08", score: 70, sessionId: "sess-def" },
+        ]}
+      />,
+    );
+    expect(screen.getByRole("link", { name: /2026-03-01/ })).toHaveAttribute(
+      "href",
+      "/sessions/sess-abc",
+    );
+    expect(screen.getByRole("link", { name: /2026-03-08/ })).toHaveAttribute(
+      "href",
+      "/sessions/sess-def",
+    );
+  });
+
+  it("names each point link with its date and score", () => {
+    render(<SkillTrendChart points={[{ date: "2026-03-01", score: 60, sessionId: "sess-abc" }]} />);
+    expect(screen.getByRole("link")).toHaveAccessibleName(/2026-03-01.*60/);
+  });
+
+  it("leaves points without a sessionId as plain markers (no link)", () => {
+    render(
+      <SkillTrendChart
+        points={[
+          { date: "2026-03-01", score: 60 },
+          { date: "2026-03-08", score: 70 },
+        ]}
+      />,
+    );
+    expect(screen.queryByRole("link")).toBeNull();
+  });
+
+  it("URL-encodes sessionId values that contain unsafe characters", () => {
+    render(
+      <SkillTrendChart
+        points={[{ date: "2026-03-01", score: 60, sessionId: "session id/with slash" }]}
+      />,
+    );
+    expect(screen.getByRole("link")).toHaveAttribute(
+      "href",
+      "/sessions/session%20id%2Fwith%20slash",
+    );
+  });
 });

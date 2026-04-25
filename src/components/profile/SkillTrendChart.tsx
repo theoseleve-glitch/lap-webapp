@@ -1,4 +1,5 @@
 import { memo, useId } from "react";
+import { sessionDetailPath } from "@/lib/routes";
 
 export interface SkillTrendPoint {
   date: string;
@@ -98,17 +99,32 @@ function SkillTrendChartImpl({ points, skillLabel = "Skill trend" }: SkillTrendC
         />
       )}
 
-      {points.map((p, i) => (
-        <circle
-          key={`${p.date}-${i}`}
-          data-role="trend-point"
-          data-session-id={p.sessionId}
-          cx={plotX(i, points.length)}
-          cy={plotY(p.score)}
-          r={2.5}
-          fill="currentColor"
-        />
-      ))}
+      {points.map((p, i) => {
+        const cx = plotX(i, points.length);
+        const cy = plotY(p.score);
+        const marker = (
+          <circle
+            data-role="trend-point"
+            data-session-id={p.sessionId}
+            cx={cx}
+            cy={cy}
+            r={2.5}
+            fill="currentColor"
+          />
+        );
+        if (p.sessionId) {
+          return (
+            <a
+              key={`${p.date}-${i}`}
+              href={sessionDetailPath(p.sessionId)}
+              aria-label={`${p.date} — score ${Math.round(p.score)}`}
+            >
+              {marker}
+            </a>
+          );
+        }
+        return <g key={`${p.date}-${i}`}>{marker}</g>;
+      })}
     </svg>
   );
 }
