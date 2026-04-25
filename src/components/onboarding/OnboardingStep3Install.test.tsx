@@ -88,4 +88,35 @@ describe("OnboardingStep3Install", () => {
     );
     expect(screen.getByRole("button", { name: /continue|next/i })).toBeDisabled();
   });
+
+  it("does not render a skip button when onSkip is omitted", () => {
+    render(<OnboardingStep3Install target="windows" installLinks={LINKS} onContinue={() => {}} />);
+    expect(screen.queryByRole("button", { name: /skip/i })).toBeNull();
+  });
+
+  it("renders a skip button when onSkip is provided", () => {
+    render(
+      <OnboardingStep3Install
+        target="windows"
+        installLinks={LINKS}
+        onContinue={() => {}}
+        onSkip={() => {}}
+      />,
+    );
+    expect(screen.getByRole("button", { name: /skip/i })).toBeInTheDocument();
+  });
+
+  it("fires onSkip when the skip button is clicked", () => {
+    const onSkip = vi.fn();
+    render(
+      <OnboardingStep3Install
+        target="windows"
+        installLinks={LINKS}
+        onContinue={() => {}}
+        onSkip={onSkip}
+      />,
+    );
+    fireEvent.click(screen.getByRole("button", { name: /skip/i }));
+    expect(onSkip).toHaveBeenCalledTimes(1);
+  });
 });

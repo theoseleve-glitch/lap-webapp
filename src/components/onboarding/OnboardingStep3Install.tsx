@@ -7,6 +7,7 @@ export interface OnboardingStep3InstallProps {
   installLinks: InstallLinks;
   onContinue: () => void;
   pending?: boolean;
+  onSkip?: () => void;
 }
 
 const LABELS: Record<ResolvedInstallTarget, string> = {
@@ -41,6 +42,7 @@ export function OnboardingStep3Install({
   installLinks,
   onContinue,
   pending = false,
+  onSkip,
 }: OnboardingStep3InstallProps) {
   const isUnknown = target === "unknown";
 
@@ -71,14 +73,25 @@ export function OnboardingStep3Install({
           <PlatformLink target={target} href={installLinks[target]} />
         </>
       )}
-      <button
-        type="button"
-        onClick={onContinue}
-        disabled={pending}
-        className="rounded border border-steel/50 text-chalk px-4 py-2 font-telemetry text-[11px] uppercase tracking-[0.12em] disabled:opacity-40 disabled:cursor-not-allowed hover:border-steel"
-      >
-        Continue
-      </button>
+      <div className="flex items-center gap-3">
+        <button
+          type="button"
+          onClick={onContinue}
+          disabled={pending}
+          className="rounded border border-steel/50 text-chalk px-4 py-2 font-telemetry text-[11px] uppercase tracking-[0.12em] disabled:opacity-40 disabled:cursor-not-allowed hover:border-steel"
+        >
+          Continue
+        </button>
+        {onSkip && (
+          <button
+            type="button"
+            onClick={onSkip}
+            className="font-telemetry text-muted text-[11px] uppercase tracking-[0.12em] hover:text-chalk"
+          >
+            Skip onboarding
+          </button>
+        )}
+      </div>
     </section>
   );
 }
