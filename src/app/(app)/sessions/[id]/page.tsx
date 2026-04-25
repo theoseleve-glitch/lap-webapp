@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageIntro } from "@/components/ui/PageIntro";
+import { SessionDetailShell } from "@/components/session/SessionDetailShell";
 
 /**
  * Block D — Session Detail decomposition plan (T061).
@@ -67,12 +67,9 @@ interface SessionDetailPageProps {
 
 export default function SessionDetailPage({ params }: SessionDetailPageProps) {
   return (
-    <section className="p-8">
-      <PageIntro
-        title="Session"
-        eyebrow={params.id}
-        subtitle="Coming soon — Block D decomposition (T062–T067) lands when the session-data hooks unblock."
-      />
-    </section>
+    <SessionDetailShell
+      sessionId={params.id}
+      subtitle="Coming soon — Block D decomposition (T063–T067) lands when the session-data hooks unblock."
+    />
   );
 }
