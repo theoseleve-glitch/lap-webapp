@@ -45,4 +45,15 @@ describe("lighthouserc.json", () => {
       { maxNumericValue: 204800 },
     ]);
   });
+
+  it("declares an error-level stylesheet-bytes budget at 30KB gzip (30720 bytes)", () => {
+    // Tailwind production purge keeps the CSS bundle around 8KB gzip; this
+    // budget gives ~3-4x headroom and catches the common purge-broke
+    // failure modes (disabled purge, missing content glob entry, an
+    // accidental import of an unused stylesheet).
+    expect(lhciConfig.ci.assert.assertions["resource-summary:stylesheet:size"]).toEqual([
+      "error",
+      { maxNumericValue: 30720 },
+    ]);
+  });
 });
