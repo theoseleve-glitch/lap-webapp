@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { ObservabilityProvider } from "@/components/providers/ObservabilityProvider";
 import { QueryProvider } from "@/components/providers/QueryProvider";
 import { AppShell } from "./AppShell";
 
@@ -14,8 +15,10 @@ interface AppLayoutProps {
 
 export default function AppLayout({ children }: AppLayoutProps) {
   return (
-    <QueryProvider>
-      <AppShell>{children}</AppShell>
-    </QueryProvider>
+    <ObservabilityProvider>
+      <QueryProvider>
+        <AppShell>{children}</AppShell>
+      </QueryProvider>
+    </ObservabilityProvider>
   );
 }
