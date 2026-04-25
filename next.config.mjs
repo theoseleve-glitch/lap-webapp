@@ -27,6 +27,12 @@ const csp = [
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  images: {
+    // AVIF first, then WebP fallback. Next.js 14 optimizer serves
+    // the first format the requesting browser supports, falling
+    // back to the original on miss.
+    formats: ["image/avif", "image/webp"],
+  },
   async headers() {
     return [
       {
