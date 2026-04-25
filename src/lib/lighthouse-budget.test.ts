@@ -56,4 +56,14 @@ describe("lighthouserc.json", () => {
       { maxNumericValue: 30720 },
     ]);
   });
+
+  it("requires a perfect accessibility score (no axe violations) on every URL", () => {
+    // Lighthouse's accessibility category runs axe-core under the hood.
+    // minScore: 1 means every auto-detectable axe rule passes; any violation
+    // (missing landmark, ARIA mismatch, contrast issue, etc.) fails the build.
+    expect(lhciConfig.ci.assert.assertions["categories:accessibility"]).toEqual([
+      "error",
+      { minScore: 1 },
+    ]);
+  });
 });

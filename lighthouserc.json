@@ -17,7 +17,8 @@
       "assertions": {
         "largest-contentful-paint": ["error", { "maxNumericValue": 2500 }],
         "resource-summary:script:size": ["error", { "maxNumericValue": 204800 }],
-        "resource-summary:stylesheet:size": ["error", { "maxNumericValue": 30720 }]
+        "resource-summary:stylesheet:size": ["error", { "maxNumericValue": 30720 }],
+        "categories:accessibility": ["error", { "minScore": 1 }]
       }
     },
     "upload": {
