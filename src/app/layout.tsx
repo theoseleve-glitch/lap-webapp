@@ -1,36 +1,29 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Inter, Space_Grotesk, Space_Mono } from "next/font/google";
-import {
-  FONT_BODY_WEIGHTS,
-  FONT_DISPLAY_WEIGHTS,
-  FONT_MONO_WEIGHTS,
-  FONT_SUBSETS,
-} from "@/lib/font-config";
 import "./globals.css";
 
-// next/font: self-hosted, zero-CLS. Weights and subset are pulled from
-// font-config.ts so the regression test there is the single source of
-// truth for what we actually ship.
+// next/font: self-hosted, zero-CLS, automatic subsetting.
+// CSS variable names match tailwind.config.ts + tokens.css expectations.
 const inter = Inter({
-  subsets: [...FONT_SUBSETS],
-  weight: [...FONT_BODY_WEIGHTS],
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
   variable: "--font-body",
   display: "swap",
   preload: true,
 });
 
 const spaceGrotesk = Space_Grotesk({
-  subsets: [...FONT_SUBSETS],
-  weight: [...FONT_DISPLAY_WEIGHTS],
+  subsets: ["latin"],
+  weight: ["600", "700"],
   variable: "--font-display",
   display: "swap",
   preload: true,
 });
 
 const spaceMono = Space_Mono({
-  subsets: [...FONT_SUBSETS],
-  weight: [...FONT_MONO_WEIGHTS],
+  subsets: ["latin"],
+  weight: ["400"],
   variable: "--font-mono",
   display: "swap",
   preload: false,
