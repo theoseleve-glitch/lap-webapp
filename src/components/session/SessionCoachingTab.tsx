@@ -58,14 +58,14 @@ function WeaknessList({ label, items }: { label: string; items: readonly Coachin
             key={w.id}
             className="flex items-center justify-between gap-3 rounded border border-steel/20 bg-graphite/40 px-3 py-2"
           >
-            <div className="flex flex-col gap-0.5">
-              <span className="font-body text-steel text-sm">{w.title}</span>
+            <div className="flex flex-col gap-0.5 min-w-0">
+              <span className="font-body text-steel text-sm break-words">{w.title}</span>
               <span className="font-telemetry text-muted text-[10px] uppercase tracking-[0.12em]">
                 {w.category}
               </span>
             </div>
             <span
-              className={`rounded border px-2 py-0.5 font-telemetry text-[10px] uppercase tracking-[0.12em] ${SEVERITY_TONE[w.severity]}`}
+              className={`rounded border px-2 py-0.5 font-telemetry text-[10px] uppercase tracking-[0.12em] flex-shrink-0 whitespace-nowrap ${SEVERITY_TONE[w.severity]}`}
             >
               {w.severity}
             </span>
@@ -102,19 +102,19 @@ function PrescriptionList({ items }: { items: readonly CoachingPrescription[] })
             className="flex flex-col gap-1 rounded border border-steel/20 bg-graphite/40 px-3 py-2"
           >
             <div className="flex items-center justify-between gap-3">
-              <span className="font-body text-steel text-sm">{p.title}</span>
+              <span className="font-body text-steel text-sm min-w-0 break-words">{p.title}</span>
               <span
-                className={`rounded border px-2 py-0.5 font-telemetry text-[10px] uppercase tracking-[0.12em] ${DIFFICULTY_TONE[p.difficulty]}`}
+                className={`rounded border px-2 py-0.5 font-telemetry text-[10px] uppercase tracking-[0.12em] flex-shrink-0 whitespace-nowrap ${DIFFICULTY_TONE[p.difficulty]}`}
               >
                 {p.difficulty}
               </span>
             </div>
-            <p className="font-body text-muted text-xs">{p.description}</p>
+            <p className="font-body text-muted text-xs break-words">{p.description}</p>
           </li>
         ))}
       </ul>
       {paginated && (
-        <div className="flex items-center justify-between gap-2 pt-1">
+        <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
           <button
             type="button"
             onClick={() => setPage((p) => Math.max(1, p - 1))}
