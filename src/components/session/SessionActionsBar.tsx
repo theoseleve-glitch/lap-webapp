@@ -9,12 +9,13 @@ export interface SessionActionsBarProps {
 
 interface ActionButtonProps {
   label: string;
+  ariaLabel: string;
   onClick?: () => void;
   isPending: boolean;
   variant: "neutral" | "destructive";
 }
 
-function ActionButton({ label, onClick, isPending, variant }: ActionButtonProps) {
+function ActionButton({ label, ariaLabel, onClick, isPending, variant }: ActionButtonProps) {
   const disabled = isPending || !onClick;
   const tone =
     variant === "destructive"
@@ -26,6 +27,7 @@ function ActionButton({ label, onClick, isPending, variant }: ActionButtonProps)
       onClick={onClick}
       disabled={disabled}
       aria-busy={isPending}
+      aria-label={ariaLabel}
       className={`rounded border px-3 py-1 font-telemetry text-[11px] uppercase tracking-[0.12em] disabled:cursor-not-allowed disabled:opacity-50 ${tone}`}
     >
       {label}
@@ -47,18 +49,21 @@ export function SessionActionsBar({
     >
       <ActionButton
         label="Delete"
+        ariaLabel="Delete session"
         onClick={onDelete}
         isPending={pendingAction === "delete"}
         variant="destructive"
       />
       <ActionButton
         label="Re-process"
+        ariaLabel="Re-process session"
         onClick={onReprocess}
         isPending={pendingAction === "reprocess"}
         variant="neutral"
       />
       <ActionButton
         label="Share"
+        ariaLabel="Share session"
         onClick={onShare}
         isPending={pendingAction === "share"}
         variant="neutral"
