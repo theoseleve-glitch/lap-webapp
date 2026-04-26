@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@lap/schemas':
+        specifier: file:../lap-schemas/typescript
+        version: file:../lap-schemas/typescript
       '@sentry/browser':
         specifier: ^10.50.0
         version: 10.50.0
@@ -1025,6 +1028,9 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
+
+  '@lap/schemas@file:../lap-schemas/typescript':
+    resolution: {directory: ../lap-schemas/typescript, type: directory}
 
   '@mdx-js/react@3.1.1':
     resolution: {integrity: sha512-f++rKLQgUVYDAtECQ6fn/is15GkEH9+nZPM3MS0RcxVqoTfawHvDlSCH7JbMhAM6uJ32v3eXLvLmLvjGu7PTQw==}
@@ -6033,6 +6039,8 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
+
+  '@lap/schemas@file:../lap-schemas/typescript': {}
 
   '@mdx-js/react@3.1.1(@types/react@18.3.3)(react@18.3.1)':
     dependencies:
