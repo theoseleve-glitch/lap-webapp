@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { useId, type KeyboardEvent } from "react";
 
 export interface PrescriptionCardProps {
   title: string;
@@ -21,9 +21,21 @@ export function PrescriptionCard({
 }: PrescriptionCardProps) {
   const headingId = useId();
 
+  const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
+    if (pending) return;
+    if (event.ctrlKey || event.metaKey || event.altKey) return;
+    const key = event.key.toLowerCase();
+    if (key === "a") {
+      onAccept();
+    } else if (key === "s") {
+      onSkip();
+    }
+  };
+
   return (
     <article
       aria-labelledby={headingId}
+      onKeyDown={handleKeyDown}
       className="flex flex-col gap-3 rounded border border-steel/30 bg-concrete p-4"
     >
       <h3
