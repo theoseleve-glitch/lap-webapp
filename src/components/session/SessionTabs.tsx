@@ -38,7 +38,10 @@ export interface SessionTabsProps {
 export function SessionTabs({ activeTab }: SessionTabsProps) {
   return (
     <div className="flex flex-col gap-6">
-      <nav aria-label="Session tabs" className="flex gap-1 border-b border-steel/30">
+      <nav
+        aria-label="Session tabs"
+        className="flex gap-1 border-b border-steel/30 overflow-x-auto"
+      >
         {TABS.map((tab) => {
           const isActive = tab.id === activeTab;
           return (
@@ -48,8 +51,8 @@ export function SessionTabs({ activeTab }: SessionTabsProps) {
               aria-current={isActive ? "page" : undefined}
               className={
                 isActive
-                  ? "border-b-2 border-pit-orange px-4 py-2 font-telemetry text-pit-orange text-[11px] uppercase tracking-[0.12em]"
-                  : "border-b-2 border-transparent px-4 py-2 font-telemetry text-steel text-[11px] uppercase tracking-[0.12em] hover:text-chalk"
+                  ? "border-b-2 border-pit-orange px-4 py-2 font-telemetry text-pit-orange text-[11px] uppercase tracking-[0.12em] whitespace-nowrap"
+                  : "border-b-2 border-transparent px-4 py-2 font-telemetry text-steel text-[11px] uppercase tracking-[0.12em] whitespace-nowrap hover:text-chalk"
               }
             >
               {tab.label}
