@@ -1,5 +1,11 @@
+"use client";
+
+import { useState } from "react";
+
 export type CoachingSeverity = "low" | "medium" | "high";
 export type CoachingDifficulty = "beginner" | "intermediate" | "advanced";
+
+const PRESCRIPTIONS_PAGE_SIZE = 10;
 
 export interface CoachingWeakness {
   id: string;
@@ -71,7 +77,16 @@ function WeaknessList({ label, items }: { label: string; items: readonly Coachin
 }
 
 function PrescriptionList({ items }: { items: readonly CoachingPrescription[] }) {
+  const [page, setPage] = useState(1);
   if (items.length === 0) return null;
+  const totalPages = Math.max(1, Math.ceil(items.length / PRESCRIPTIONS_PAGE_SIZE));
+  const safePage = Math.min(page, totalPages);
+  const paginated = items.length > PRESCRIPTIONS_PAGE_SIZE;
+  const visible = paginated
+    ? items.slice((safePage - 1) * PRESCRIPTIONS_PAGE_SIZE, safePage * PRESCRIPTIONS_PAGE_SIZE)
+    : items;
+  const atFirst = safePage <= 1;
+  const atLast = safePage >= totalPages;
   return (
     <section
       aria-label="Prescriptions"
@@ -81,7 +96,7 @@ function PrescriptionList({ items }: { items: readonly CoachingPrescription[] })
         Prescriptions
       </p>
       <ul className="flex flex-col gap-2">
-        {items.map((p) => (
+        {visible.map((p) => (
           <li
             key={p.id}
             className="flex flex-col gap-1 rounded border border-steel/20 bg-graphite/40 px-3 py-2"
@@ -98,6 +113,31 @@ function PrescriptionList({ items }: { items: readonly CoachingPrescription[] })
           </li>
         ))}
       </ul>
+      {paginated && (
+        <div className="flex items-center justify-between gap-2 pt-1">
+          <button
+            type="button"
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={atFirst}
+            aria-label="Previous page"
+            className="rounded border border-steel/40 text-steel px-2 py-1 font-telemetry text-[10px] uppercase tracking-[0.12em] disabled:cursor-not-allowed disabled:opacity-40 hover:border-steel/70"
+          >
+            Previous
+          </button>
+          <span className="font-telemetry text-steel text-[10px] uppercase tracking-[0.12em]">
+            Page {safePage} of {totalPages}
+          </span>
+          <button
+            type="button"
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            disabled={atLast}
+            aria-label="Next page"
+            className="rounded border border-steel/40 text-steel px-2 py-1 font-telemetry text-[10px] uppercase tracking-[0.12em] disabled:cursor-not-allowed disabled:opacity-40 hover:border-steel/70"
+          >
+            Next
+          </button>
+        </div>
+      )}
     </section>
   );
 }
