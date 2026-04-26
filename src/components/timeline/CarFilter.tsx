@@ -20,6 +20,7 @@ export function CarFilter({ cars, value, onChange }: CarFilterProps) {
       options={options}
       value={value ?? ALL_VALUE}
       onChange={(next) => onChange(next === ALL_VALUE ? null : next)}
+      layout="scroll"
     />
   );
 }

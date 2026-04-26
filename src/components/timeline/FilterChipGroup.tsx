@@ -3,11 +3,19 @@ export interface FilterChipOption<V extends string> {
   label: string;
 }
 
+export type FilterChipLayout = "wrap" | "scroll";
+
 export interface FilterChipGroupProps<V extends string> {
   label: string;
   options: readonly FilterChipOption<V>[];
   value: V;
   onChange: (value: V) => void;
+  /**
+   * "wrap" (default) lets chips wrap onto multiple lines on narrow viewports.
+   * "scroll" pins them to a single horizontally-scrollable row — useful when
+   * the option count would produce a tall multi-line wrap on mobile (T133).
+   */
+  layout?: FilterChipLayout;
 }
 
 export function FilterChipGroup<V extends string>({
@@ -15,15 +23,22 @@ export function FilterChipGroup<V extends string>({
   options,
   value,
   onChange,
+  layout = "wrap",
 }: FilterChipGroupProps<V>) {
+  const containerClass =
+    layout === "scroll"
+      ? "flex gap-2 overflow-x-auto font-telemetry text-[11px] uppercase tracking-[0.12em]"
+      : "flex flex-wrap gap-2 font-telemetry text-[11px] uppercase tracking-[0.12em]";
+
   return (
-    <div
-      role="radiogroup"
-      aria-label={label}
-      className="flex flex-wrap gap-2 font-telemetry text-[11px] uppercase tracking-[0.12em]"
-    >
+    <div role="radiogroup" aria-label={label} className={containerClass}>
       {options.map((option) => {
         const selected = option.value === value;
+        const baseChip =
+          "rounded border px-3 py-1 whitespace-nowrap " +
+          (selected
+            ? "border-pit-orange/70 bg-pit-orange/10 text-pit-orange"
+            : "border-steel/40 text-steel hover:text-chalk hover:border-steel");
         return (
           <button
             key={option.value}
@@ -33,11 +48,7 @@ export function FilterChipGroup<V extends string>({
             onClick={() => {
               if (!selected) onChange(option.value);
             }}
-            className={
-              selected
-                ? "rounded border border-pit-orange/70 bg-pit-orange/10 text-pit-orange px-3 py-1"
-                : "rounded border border-steel/40 text-steel px-3 py-1 hover:text-chalk hover:border-steel"
-            }
+            className={baseChip}
           >
             {option.label}
           </button>
