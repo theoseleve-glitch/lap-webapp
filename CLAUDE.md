@@ -2,6 +2,12 @@
 
 Repo-scoped instructions. Extends `C:/Users/Admin/CLAUDE.md`.
 
+## ⚠️ NOT THE PRODUCTION WEBAPP
+
+This repo is an **in-progress rebuild scaffold** (sprint queue T061–T133 = ~60 UI primitives; no auth, no routes for /login or /signup, no API). The **production webapp** is the V2 Next.js at `../lap_web/lap-website/` — deployed as Cloudflare Worker `lap-website`, serves `lap-coach.racing/{login,register,oauth-callback,forgot-password,reset-password,verify-email}*`, `/app/*`, `/api/*`, `/admin/*`. When the user mentions "the webapp", default to that path, not this one. See `C:/Users/Admin/.claude/projects/C--Users-Admin-Documents-Telemetry/memory/lap_repo_map.md` for the full architecture map.
+
+Do NOT `cf:deploy` this repo and do NOT rewire Cloudflare routes to point at it until the rebuild is feature-complete.
+
 ## Context
 
 - Stack: Next.js 14, React 18, TypeScript strict, Tailwind, TanStack Query v5.

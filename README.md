@@ -1,6 +1,8 @@
 # lap-webapp
 
-Next.js 14 Driver OS webapp at `app.lap.com`. Marketing site is separate at `lap-website/` (to be extracted).
+> ⚠️ **NOT THE PRODUCTION WEBAPP.** This repo is a rebuild scaffold (sprint queue T061–T133, UI primitives only — no auth, no routes for /login or /signup, no API). The live production webapp continues to be the V2 Next.js at `../lap_web/lap-website/`, deployed as the Cloudflare Worker `lap-website` and serving the auth + `/app/*` + `/api/*` paths on `lap-coach.racing`. Do not `cf:deploy` this repo expecting users to land in it.
+
+Next.js 14 Driver OS rebuild aimed at eventually taking over the webapp routes from `lap_web/lap-website/`. Marketing site is separate at `../lap-website/` (Astro 5, already extracted and live).
 
 ## Sprint queue
 
